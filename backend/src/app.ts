@@ -3,6 +3,8 @@
 
 import * as express from 'express'
 import * as mongoose from 'mongoose'
+import path from 'path';
+import mime from 'mime';
 
 const app = express();
 
@@ -10,6 +12,11 @@ const PORT = 8080
 
 // THIS STRING IS THE LINK TO OUR MONGODB
 const databaseUrl = 'mongodb://localhost:27017'
+
+// Setup express
+app.use(express.static(path.join(__dirname, '..', 'dist', 'reiseblog'), {
+    setHeaders: (res, filePath) => res.setHeader('Content-Type', mime.getType(filePath) ?? '')
+}))
 
 // mongodb connection
 mongoose.connect(databaseUrl, {
