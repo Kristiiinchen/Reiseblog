@@ -3,8 +3,10 @@
 
 import * as express from 'express'
 import * as mongoose from 'mongoose'
-import path from 'path';
-import mime from 'mime';
+import * as path from 'path';
+import * as mime from 'mime';
+import { createNote, getAllNotes } from './mongo/mongo';
+import { Note } from './mongo/models/note';
 
 const app = express();
 
@@ -13,8 +15,10 @@ const PORT = 8080
 // THIS STRING IS THE LINK TO OUR MONGODB
 const databaseUrl = 'mongodb://localhost:27017'
 
+const pathToDeploy = path.join(__dirname, '..', 'deploy-frontend', 'reiseblog');
+
 // Setup express
-app.use(express.static(path.join(__dirname, '..', 'deploy-frontend', 'reiseblog'), {
+app.use(express.static(pathToDeploy, {
     setHeaders: (res, filePath) => res.setHeader('Content-Type', mime.getType(filePath) ?? '')
 }))
 
@@ -28,7 +32,21 @@ mongoose.connect(databaseUrl, {
     .catch(err => console.log(err))
 
 
-app.get('/', (req: express.Request, res: express.Response) => {
+app.get('/test', (req: express.Request, res: express.Response) => {
     res.setHeader('Content-Type', 'text/html')
     res.end('<h1>Hello World</h1>')
 })
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(pathToDeploy, 'index.html'))
+})
+
+
+app.get('/api/notes/create', (req, res) => {
+    res.send(createNote());
+});
+
+app.get('/api/notes/create', (req, res) => {
+    res.send(getAllNotes());
+});
