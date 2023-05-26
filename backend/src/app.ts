@@ -14,7 +14,7 @@ const PORT = 8080
 const databaseUrl = 'mongodb://localhost:27017'
 
 // Setup express
-app.use(express.static(path.join(__dirname, '..', 'dist', 'reiseblog'), {
+app.use(express.static(path.join(__dirname, '..', 'deploy-frontend', 'reiseblog'), {
     setHeaders: (res, filePath) => res.setHeader('Content-Type', mime.getType(filePath) ?? '')
 }))
 
