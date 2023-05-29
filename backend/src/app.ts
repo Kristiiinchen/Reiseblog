@@ -5,7 +5,7 @@ import * as express from 'express'
 import * as mongoose from 'mongoose'
 import * as path from 'path';
 import * as mime from 'mime';
-import { createNote, getAllNotes } from './mongo/mongo';
+import { createNote, deletedNote, findNote, getAllNotes } from './mongo/mongo';
 import { Note } from './mongo/models/note';
 
 const app = express();
@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(pathToDeploy, 'index.html'))
 })
 
-
+//create a new entry in the Collection "notes"
 app.get('/api/notes/create', async (req, res) => {
    try {
     const notes = await createNote(); // create a new note using the createNote() function
@@ -55,6 +55,7 @@ app.get('/api/notes/create', async (req, res) => {
   }
 });
 
+//get all notes from collection
 app.get('/api/notes/getall', async (req, res) => {
     try {
       const notes = await getAllNotes(); // Retrieve all notes using the getAllNotes() function
@@ -65,4 +66,28 @@ app.get('/api/notes/getall', async (req, res) => {
       res.status(500).send('Error retrieving notes');
     }
   });
+
+  //Get one specific note
+  app.get('/api/notes/getone', async (req, res) => {
+    try {
+      const notes = await findNote(); // Retrieve one specific note using the findNotes() function
+      res.send(notes); // Send the retrieved notes as the response
+    } catch (error) {
+      // Handle any errors
+      console.error(error);
+      res.status(500).send('Error retrieving notes');
+    }
+  });
+
+    //delete one specific note
+    app.get('/api/notes/deleteone', async (req, res) => {
+        try {
+          const notes = await deletedNote(); // Delete one specific note by given id using the deletedNotes() function
+          res.send(notes); // Send the deleted notes as the response
+        } catch (error) {
+          // Handle any errors
+          console.error(error);
+          res.status(500).send('Error retrieving notes');
+        }
+      });
   
