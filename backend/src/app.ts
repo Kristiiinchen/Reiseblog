@@ -45,7 +45,6 @@ app.get('/', (req, res) => {
 
 
 app.get('/api/notes/create', async (req, res) => {
-   // res.send(createNote());
    try {
     const notes = await createNote(); // create a new note using the createNote() function
     res.send(notes); // Send the retrieved notes as the response
