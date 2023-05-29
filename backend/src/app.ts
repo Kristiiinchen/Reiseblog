@@ -32,6 +32,7 @@ mongoose.connect(databaseUrl, {
     .catch(err => console.log(err))
 
 
+
 app.get('/test', (req: express.Request, res: express.Response) => {
     res.setHeader('Content-Type', 'text/html')
     res.end('<h1>Hello World</h1>')
@@ -43,10 +44,26 @@ app.get('/', (req, res) => {
 })
 
 
-app.get('/api/notes/create', (req, res) => {
-    res.send(createNote());
+app.get('/api/notes/create', async (req, res) => {
+   // res.send(createNote());
+   try {
+    const notes = await createNote(); // create a new note using the createNote() function
+    res.send(notes); // Send the retrieved notes as the response
+  } catch (error) {
+    // Handle any errors
+    console.error(error);
+    res.status(500).send('Error creating notes');
+  }
 });
 
-app.get('/api/notes/create', (req, res) => {
-    res.send(getAllNotes());
-});
+app.get('/api/notes/getall', async (req, res) => {
+    try {
+      const notes = await getAllNotes(); // Retrieve all notes using the getAllNotes() function
+      res.send(notes); // Send the retrieved notes as the response
+    } catch (error) {
+      // Handle any errors
+      console.error(error);
+      res.status(500).send('Error retrieving notes');
+    }
+  });
+  
