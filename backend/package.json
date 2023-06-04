@@ -4,11 +4,12 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "build": "tsc src/app.ts --outDir dist/",
-    "build-watch": "tsc src/app.ts --outDir dist/ --watch",
+    "build": "tsc --outDir dist/ -p ./tsconfig.json",
+    "build-watch": "tsc  -p ./tsconfig.json --outDir dist/ --watch",
     "start": "nodemon dist/app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "type": "module",
   "keywords": [],
   "author": "",
   "license": "ISC",

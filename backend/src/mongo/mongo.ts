@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
-import { noteSchema } from "./schemas/note.schema";
-import { Note } from "./models/note";
+import { noteSchema } from "./schemas/note.schema.js";
+import { Note } from "./models/note.js";
 
 //function to get all notes within a Collection
 export async function getAllNotes() {

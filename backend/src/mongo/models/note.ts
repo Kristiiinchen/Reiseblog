@@ -1,4 +1,4 @@
-import { noteSchema } from "../schemas/note.schema";
+import { noteSchema } from "../schemas/note.schema.js";
 import mongoose from "mongoose";
 
 
