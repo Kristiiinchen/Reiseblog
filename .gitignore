@@ -131,4 +131,4 @@ dist
 
 ## User-Defined
 **/deploy-frontend
-backend/config.production.json
+backend/config.json
